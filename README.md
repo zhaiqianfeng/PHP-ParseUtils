@@ -7,7 +7,6 @@ If you have any questions,please [let me know](http://www.zhaiqianfeng.com/blog/
 <code>
  public function prase($orginalStr)
     {
-
         $parse = new ParseUtils($orginalStr);
 
         $res = $parse->getByte();
