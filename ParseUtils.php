@@ -19,7 +19,10 @@ namespace Common\Utils;
 class ParseUtils
 {
     private $index = 0;
-    private $byteArr;
+    private $buffer;
+    private $orginalStr;
+    private $validMaxIndex;
+
 
     /**
      * ParseUtils constructor.
@@ -34,8 +37,11 @@ class ParseUtils
         for ($i = 0; $i < $len; $i++) {
             $tempArr[] = substr($orginalStr, $i * 2, 2);
         }
-        $this->byteArr = $tempArr;
+
+        $this->buffer = $tempArr;
+        $this->validMaxIndex = count($this->buffer) - 1;
     }
+
 
     /**
      * @return mixed
@@ -61,14 +67,29 @@ class ParseUtils
         return hexdec($this->getBytes(4));
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOrginalStr()
+    {
+        return $this->orginalStr;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBuffer()
+    {
+        return $this->buffer;
+    }
 
     /**
      * @return mixed
      */
     public function getIndex()
     {
-        if ($this->index >= count($this->byteArr)) {
-            throw new \Exception("Index Out Of Range Exception,index is " . $this->index . ",and range is" . count($this->byteArr));
+        if ($this->index >= count($this->buffer)) {
+            throw new \Exception("get Index Out Of Range Exception,index is " . $this->index . ",and range is" . count($this->buffer));
         }
         return $this->index;
     }
@@ -78,23 +99,35 @@ class ParseUtils
      */
     public function setIndex($index)
     {
-        if ($index >= count($this->byteArr) || $index < 0) {
-            throw new \Exception("Index Out Of Range Exception,index is " . $index . ",and range is" . count($this->byteArr));
+        if ($index >= count($this->buffer) || $index < 0) {
+            throw new \Exception("set Index Out Of Range Exception,index is " . $index . ",and range is" . count($this->buffer));
         }
         $this->index = $index;
     }
 
     /**
-     * @param $str
      * @param $len
-     * @return mixed
      */
-    private function getBytes($len = 1)
+    public function ignoreBytes($len)
+    {
+        $this->getBytes($len, False);
+    }
+
+    /**
+     * @param int $len
+     * @param bool $unIgnore
+     * @return string
+     */
+    private function getBytes($len = 1, $unIgnore = true)
     {
         $res = '';
         for ($i = 0; $i < $len; $i++) {
-            $res .= $this->byteArr[$this->getIndex()];
-            $this->setIndex($this->getIndex() + 1);
+            if ($unIgnore) {
+                $res .= $this->buffer[$this->index];
+            }
+            if ($this->index < $this->validMaxIndex) {
+                $this->index++;
+            }
         }
 
         return $res;
