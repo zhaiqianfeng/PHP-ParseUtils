@@ -18,6 +18,10 @@ If you have any questions,please [let me know](http://www.zhaiqianfeng.com/blog/
         $parse->setIndex(1);
         $res .= $parse->getShort();
 
+        //ignore next 10bytes
+        $parse->ignoreBytes(10);
+        $res .= $parse->getShort();
+
         return $res;
     }
 
