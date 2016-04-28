@@ -5,13 +5,13 @@ If you have any questions,please [let me know](http://www.zhaiqianfeng.com/blog/
 
 ##Code example
 <code>
- public function prase($orginalStr)
-    {
-        $parse = new ParseUtils($orginalStr);
-
-        $res = $parse->getByte();
-        $res .= $parse->getShort();
-
-        return $res;
-    }
+public function prase($orginalStr)
+{
+  $parse = new ParseUtils($orginalStr);
+  
+  $res = $parse->getByte();
+  $res .= $parse->getShort();
+  
+  return $res;
+}
 </code>
