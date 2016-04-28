@@ -60,6 +60,8 @@ class ParseUtils
         return $this->index;
     }
 
+    
+
     /**
      * @param mixed $index
      */
