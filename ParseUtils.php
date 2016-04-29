@@ -26,16 +26,16 @@ class ParseUtils
 
     /**
      * ParseUtils constructor.
-     * @param $orginalStr 16进制字符串
+     * @param $hexStr 16进制字符串
      */
-    public function __construct($orginalStr)
+    public function __construct($hexStr)
     {
-        $len = ceil(strlen($orginalStr) / 2);
+        $len = ceil(strlen($hexStr) / 2);
 
         $tempArr = array();
 
         for ($i = 0; $i < $len; $i++) {
-            $tempArr[] = substr($orginalStr, $i * 2, 2);
+            $tempArr[] = substr($hexStr, $i * 2, 2);
         }
 
         $this->buffer = $tempArr;
@@ -127,6 +127,8 @@ class ParseUtils
             }
             if ($this->index < $this->validMaxIndex) {
                 $this->index++;
+            }else{
+                break;
             }
         }
 
